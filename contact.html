@@ -24,6 +24,8 @@
     <link rel="stylesheet" href="assets/css/plugins/nice-select.min.css" />
     <link rel="stylesheet" href="assets/css/plugins/jquery-ui.min.css" />
     <link rel="stylesheet" href="assets/css/plugins/magnific-popup-min.css" /> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
 
     <!-- Use the minified version files listed below for better performance and remove the files listed above -->
 
@@ -204,46 +206,46 @@
                             <span></span>
                         </div>
                         <!-- Section Title End -->
-                        <form action="https://whizthemes.com/mail-php/reza/triball/triball.php" id="contact-form" method="post">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="row">
+                        <div id="message-contact"></div>
+					<form id="contactForm">
+                        <div class="col-12"></div>
+					<div class="row">
+					<div class="col-md-6 col-sm-6">
+								<div class="form-group">
+									<label>Name:</label>
+									<input   id="name" type="text"   name="name"  class="form-control styled" placeholder="YOUR NAME">
+						</div>
+                    					
+						<div class="col-md-6 col-sm-6">
+						<div class="form-group">
+							<label>Email:</label>
+							<input type="email" id="email" name="email" class="form-control styled" placeholder="EMAIL">
+						</div>	
+					</div>
+					  <div class="col-md-6 col-sm-6">
+								<div class="form-group">
+									<label>subject:</label>
+									<input type="text" id="subject" name="subject"  class="form-control styled"  placeholder="subject">
+								</div>
+							</div>
+						</div>
+			  
 
-                                        <div class="col-md-12" data-aos="fade-up" data-aos-duration="1400">
-                                            <div class="input-area m-b-20">
-                                                <input class="input-item" type="text" placeholder="Your Name *" name="name">
-                                            </div>
-                                        </div>
+			  <div class="col-md-12">
+				  <div class="form-group">
+					  <label>Your message:</label>
+					  <textarea  id="message" name="message" class="form-control styled" style="height:100px;" placeholder="MESSAGE"></textarea>
+				  </div>
+			  </div>
+		  </div>
+          <div class="col-12" data-aos="fade-up" data-aos-duration="2200">
+            <p><input type="submit" value="submit" id="submit"></p>
+        </div>
+        <p class="col-8 form-message mb-0"></p>
 
-                                        <div class="col-md-12" data-aos="fade-up" data-aos-duration="1600">
-                                            <div class="input-area m-b-20">
-                                                <input class="input-item" type="email" placeholder="Email *" name="email">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-12" data-aos="fade-up" data-aos-duration="1800">
-                                            <div class="input-area m-b-20">
-                                                <input class="input-item" type="text" placeholder="Subject *" name="subject">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-12" data-aos="fade-up" data-aos-duration="2000">
-                                            <div class="input-area m-b-40">
-                                                <textarea cols="30" rows="5" class="textarea-item" name="message" placeholder="Message"></textarea>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-12" data-aos="fade-up" data-aos-duration="2200">
-                                            <button type="submit" id="submit" name="submit" class="btn btn-dark btn-hover-primary">Send Now</button>
-                                        </div>
-                                        <p class="col-8 form-message mb-0"></p>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                        <p class="form-messege"></p>
-                    </div>
+    </div>
+</div>
+</div>                 
                     <!-- Contact Form Wrapper End -->
 
                 </div>
@@ -466,8 +468,8 @@
             <!-- Button Close End -->
 
             <!-- Offcanvas Search Form Start -->
-            <form class="offcanvas-search-form" action="#">
-                <input type="text" placeholder="Search Here" class="offcanvas-search-input">
+            <form id="contact-form">
+                <input type="text"  placeholder="Search Here" class="offcanvas-search-input">
             </form>
             <!-- Offcanvas Search Form End -->
 
@@ -491,6 +493,7 @@
 
      
     <script src="assets/js/plugins/aos.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="assets/js/plugins/jquery.ajaxchimp.min.js"></script>
     <script src="assets/js/plugins/jquery-ui.min.js"></script>
     <script src="assets/js/plugins/nice-select.min.js"></script>
@@ -508,6 +511,57 @@
 
     <!--Main JS-->
     <script src="assets/js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('#contactForm').on('submit', function(e) {
+        e.preventDefault();
+        
+        var name = $('#name').val();
+        var email = $('#email').val();
+        var subject = $('#subject').val();
+        var message = $('#message').val();
+
+        $.ajax({
+          url: 'https://script.google.com/macros/s/AKfycbzAsssuVfpng5hYnJr5aPhxahb7QGPX8RrJNxDpCB5AJ0MV-XMWvzaEmNK2m7mgzF4lUw/exec', // Replace with your Google Apps Script URL
+          method: 'POST',
+          data: {
+            name: name,
+            email: email,
+            subject: subject,
+            message: message
+          },
+          success: function(response) {
+            toastr.success('Form submitted successfully!');
+            setTimeout(function() {
+              window.location.href = 'http://127.0.0.1:5500/contact.html';
+            }, 3000);
+          },
+          error: function() {
+            toastr.error('There was an error submitting the form. Please try again.');
+          }
+        });
+      });
+    });
+
+    toastr.options = {
+  "closeButton": true,
+  "debug": false,
+  "newestOnTop": false,
+  "progressBar": false,
+  "positionClass": "toast-top-full-width",
+  "preventDuplicates": false,
+  "onclick": null,
+  "showDuration": "300",
+  "hideDuration": "1000",
+  "timeOut": "5000",
+  "extendedTimeOut": "1000",
+  "showEasing": "swing",
+  "hideEasing": "linear",
+  "showMethod": "fadeIn",
+  "hideMethod": "fadeOut"
+}
+  </script>
 
 </body>
 

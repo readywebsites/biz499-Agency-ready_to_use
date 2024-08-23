@@ -4570,3 +4570,24 @@ img {
   -webkit-box-shadow: none;
           box-shadow: none;
 }
+
+/* .about-img1{
+  width: 531px;
+  height: 580px;
+  border-radius: 15px;
+} */
+
+.gall1{
+  width: 370px;
+  height:300px ;
+}
+.bolg1{
+  width: 370px;
+  height: 230px;
+}
+
+.about11{
+  width: 531px;
+  height: 580px;
+  border-radius: 20px;
+}
